@@ -1,0 +1,16 @@
+#!/bin/bash
+arr=($(ls $1))
+
+echo ""
+echo "==============================="
+
+for item in "${arr[@]}"; do
+  cd $item
+  echo "==> ${item}"
+  git status -s -b
+  echo ""
+  cd ..
+done
+
+echo "==============================="
+echo ""

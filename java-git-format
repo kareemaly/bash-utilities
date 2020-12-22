@@ -1,0 +1,14 @@
+#!/bin/bash
+shopt -s expand_aliases
+. ~/.bash_aliases
+
+files=($(git status --porcelain | awk '{print $2}'))
+
+for filename in "${files[@]}"; do
+    extension="${filename##*.}"
+    if [ $extension == "java" ]; then
+        echo "Autoformatting file: $filename"
+        java-autoformat -a --skip-sorting-imports -i "$filename"
+    fi
+done
+

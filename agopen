@@ -1,0 +1,17 @@
+#!/bin/bash
+search=$@
+
+files=( $(ag $@ -l -0 | xargs -0 -I % echo "$(pwd)/%") )
+
+rm -rf ./tmp_search
+mkdir ./tmp_search
+
+counter=0
+for i in "${files[@]}"; do
+  filename=./tmp_search/$counter-"$(basename $i)"
+  cp -v -T $i $filename
+  echo -e "$i\n\n$(cat $filename)" > $filename
+done
+
+cd tmp_search && vim
+cd .. && rm -rf tmp_search

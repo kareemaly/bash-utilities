@@ -1,0 +1,30 @@
+#!/bin/bash
+compileCommand="mvn clean generate-sources compiler:compile compiler:testCompile -nsu -T 1C"
+testCommand="mvn clean test -nsu -T 1C"
+
+if [ "$1" == "compile-watch" ]
+then
+  nodemon -w ./src --ext "java" --exec "$compileCommand"
+elif [ "$1" == "compile" ]
+then
+  eval "$compileCommand"
+elif [ "$1" == "test" ]
+then
+  shift;
+  echo "execting: $testCommand $@"
+  sleep 1
+  eval "$testCommand $@"
+elif [ "$1" == "test-watch" ]
+then
+  shift;
+  nodemon -w ./src --ext "java" --exec "$testCommand $@"
+elif [ "$1" == "install" ]
+then
+  mvn clean install -DskipTests -nsu -T 1C
+elif [ "$1" == "list" ]
+then
+  mvn fr.jcgay.maven.plugins:buildplan-maven-plugin:list
+else
+  echo java command not found
+fi
+

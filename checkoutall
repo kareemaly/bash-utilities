@@ -1,0 +1,9 @@
+#!/bin/bash
+arr=($(ls $1))
+
+for item in "${arr[@]}"; do
+  cd $item
+  git checkout master
+  git pull
+  cd ..
+done
