@@ -1,0 +1,2 @@
+#!/bin/bash
+mediainfo --Inform="Video;%Duration/String%\n" $@

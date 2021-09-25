@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Requires npm install -g clipboard-cli
+cat "index.js" | sed -E 's/console.(log|debug|info|...|count)\((.*)\);?//g' | clipboard
+

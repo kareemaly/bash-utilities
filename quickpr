@@ -1,0 +1,18 @@
+#!/bin/bash
+
+existed_in_remote=$(git ls-remote --heads origin ${1})
+existed_in_local=$(git branch --list ${1})
+
+if [[ -z ${existed_in_remote} ]]; then
+  if [[ -z ${existed_in_local} ]]; then
+    git checkout -b $1
+    git add --all
+    git commit -m "$2"
+    git push origin HEAD --set-upstream
+  else
+    echo "Branch already exists locally... exiting"
+  fi
+else
+  echo "Branch already exists on remote... exiting"
+fi
+
